@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://by4iuylotqhes"]
+
+[ext_resource type="Script" path="res://game/ui/charges.gd" id="1_al120"]
+
+[node name="Charges" type="HBoxContainer"]
+offset_right = 100.0
+offset_bottom = 10.0
+script = ExtResource("1_al120")
+maximun = 5
+amount = 0

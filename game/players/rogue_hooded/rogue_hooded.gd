@@ -32,6 +32,13 @@ var dashing: bool = false
 @onready var shield_spawner: Node3D = %ShieldSpawner
 @onready var projectile_spawner: Node3D = %ProjectileSpawner
 
+#HUD
+@onready var hud: Control = %HUD
+@onready var hud_projectile_charges: RichTextLabel = $HUD/Projectile/Charges
+@onready var hud_shield_charges: RichTextLabel = $HUD/Cooldowns/Shield/Charges
+@onready var hud_quicksand_charges: RichTextLabel = $HUD/Cooldowns/Quicksand/Charges
+@onready var hud_cooldowns_charges: RichTextLabel = $HUD/Cooldowns/Dash/Charges
+
 # Timers
 @onready var dash_timer: Timer = %DashTimer
 @onready var projectile_timer: Timer = %ProjectileTimer
@@ -49,7 +56,7 @@ var projectile_ammo: int = MAX_PROJECTILES_AMMO
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-
+	
 
 func _manage_camera(event: InputEvent) -> void:
 	if is_multiplayer_authority() and event is InputEventMouseMotion:
@@ -63,10 +70,10 @@ func _input(event: InputEvent) -> void:
 		get_tree().quit()
 	_manage_camera(event)
 
-
 func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
 	handle_animations()
+	update_hud()
 
 	if can_move:
 		movement(delta)
@@ -219,6 +226,8 @@ func setup(player_data: Statics.PlayerData) -> void:
 	name = str(player_data.id)
 	set_multiplayer_authority(player_data.id)
 	camera_3d.current = is_multiplayer_authority()
+	if is_multiplayer_authority():
+		hud.visible = true
 
 
 @rpc("unreliable_ordered")
@@ -226,6 +235,7 @@ func send_data(pos: Vector3, vel: Vector3, quaternion):
 	global_position = lerp(global_position, pos, 0.75)
 	velocity = lerp(velocity, vel, 0.75)
 	rig.quaternion = rig.quaternion.slerp(quaternion, 0.75)
+	
 
 
 func take_damage(amount: float) -> void:
@@ -278,6 +288,10 @@ func stop_dance() -> void:
 		is_dancing = false
 		animation_tree.get("parameters/playback").travel("Movement")
 
+func update_hud() -> void:
+	hud_projectile_charges.text = str(projectile_ammo)
+	hud_shield_charges.text = str(shield_charges)
+	hud_quicksand_charges.text = str(charges)
 
 func _on_dash_duration_timeout() -> void:
 	dashing = false
