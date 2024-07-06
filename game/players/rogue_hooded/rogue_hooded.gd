@@ -383,3 +383,9 @@ func _on_dash_timer_timeout():
 	dash_charges += 1
 	if dash_charges < MAX_DASH_CHARGES:
 		dash_timer.start()
+func lock_player() -> void:
+	can_jump = false
+	can_move = false
+	shield_charges = 0
+	projectile_ammo = 0
+	can_throw_grenade = false
