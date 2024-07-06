@@ -1,0 +1,193 @@
+[gd_scene load_steps=10 format=3 uid="uid://fkg5dvy0pi8m"]
+
+[ext_resource type="Texture2D" uid="uid://dgpxrp4qvvnhq" path="res://game/tutorial/keyboard_w.png" id="1_f83y6"]
+[ext_resource type="Texture2D" uid="uid://dovejmb3nko5c" path="res://game/tutorial/keyboard_shift.png" id="1_jmafx"]
+[ext_resource type="Texture2D" uid="uid://cjm0xd8oak8sd" path="res://game/tutorial/keyboard_a.png" id="2_rio6d"]
+[ext_resource type="Texture2D" uid="uid://psxu1p8mil6d" path="res://game/tutorial/keyboard_s.png" id="3_kupa7"]
+[ext_resource type="Texture2D" uid="uid://bmerjonpglpxr" path="res://game/tutorial/keyboard_d.png" id="4_2w8r5"]
+[ext_resource type="Texture2D" uid="uid://do0s7w8mmku4a" path="res://game/tutorial/keyboard_space.png" id="5_77huw"]
+[ext_resource type="Texture2D" uid="uid://i741771vc8uo" path="res://game/tutorial/mouse_left_outline.png" id="6_dp3de"]
+[ext_resource type="Texture2D" uid="uid://cs8nxvm1cv2u7" path="res://game/tutorial/mouse_right_outline.png" id="7_fuv67"]
+[ext_resource type="Texture2D" uid="uid://c3dda2pexacr0" path="res://game/tutorial/keyboard_q.png" id="8_uptxx"]
+
+[node name="Movement" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -232.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = -20
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="VBoxContainer5" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = -10
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer5"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 24
+text = "Dash"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Shift" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer5"]
+texture_filter = 1
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("1_jmafx")
+expand_mode = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer4" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Jump" type="Label" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 24
+text = "Movement"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer4"]
+layout_mode = 2
+
+[node name="W" type="TextureRect" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer4/VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("1_f83y6")
+stretch_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer4/VBoxContainer"]
+layout_mode = 2
+
+[node name="A" type="TextureRect" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer4/VBoxContainer/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("2_rio6d")
+
+[node name="S" type="TextureRect" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer4/VBoxContainer/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("3_kupa7")
+
+[node name="D" type="TextureRect" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer4/VBoxContainer/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("4_2w8r5")
+
+[node name="VBoxContainer4" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = -45
+
+[node name="Jump" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 24
+text = "Jump"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SPACE" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer4"]
+texture_filter = 1
+custom_minimum_size = Vector2(204, 204)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("5_77huw")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = -10
+
+[node name="Toss" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 24
+text = "Toss"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LeftClick" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("6_dp3de")
+expand_mode = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = -10
+
+[node name="Shield" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 24
+text = "Shield"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RightClick" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer2"]
+texture_filter = 1
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("7_fuv67")
+expand_mode = 1
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = -10
+
+[node name="Quicksand" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 24
+text = "Quicksand"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Q" type="TextureRect" parent="VBoxContainer/HBoxContainer/VBoxContainer3"]
+texture_filter = 1
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("8_uptxx")
+expand_mode = 1
