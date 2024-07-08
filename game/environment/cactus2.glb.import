@@ -3,18 +3,18 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://f3m3vb3eghmr"
-path="res://.godot/imported/mountain.glb-1ad10ff74ff15251622f9466973e6ecd.scn"
+uid="uid://d1ahlhnem03ls"
+path="res://.godot/imported/cactus2.glb-6fc4846a6373c3ac9be60acba7f2fdf3.scn"
 
 [deps]
 
-source_file="res://game/environment/mountain.glb"
-dest_files=["res://.godot/imported/mountain.glb-1ad10ff74ff15251622f9466973e6ecd.scn"]
+source_file="res://game/environment/cactus2.glb"
+dest_files=["res://.godot/imported/cactus2.glb-6fc4846a6373c3ac9be60acba7f2fdf3.scn"]
 
 [params]
 
-nodes/root_type=""
-nodes/root_name=""
+nodes/root_type="Node3D"
+nodes/root_name="cactus2"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 meshes/ensure_tangents=true
@@ -31,10 +31,8 @@ animation/remove_immutable_tracks=true
 import_script/path=""
 _subresources={
 "nodes": {
-"PATH:Mountain2": {
-"generate/physics": true,
-"physics/mask": 7,
-"physics/shape_type": 2
+"PATH:Object_7": {
+"generate/physics": true
 }
 }
 }

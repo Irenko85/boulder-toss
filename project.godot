@@ -22,6 +22,10 @@ config/icon="res://icon.png"
 Debug="*res://scripts/debug.gd"
 Game="*res://game/game.tscn"
 
+[display]
+
+window/size/mode=2
+
 [dotnet]
 
 project/assembly_name="multiplayer_example"
