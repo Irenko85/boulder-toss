@@ -196,7 +196,6 @@ func handle_animations() -> void:
 		animation_tree.set("parameters/conditions/jumping", true)
 		animation_tree.set("parameters/conditions/grounded", false)
 	if is_on_floor() and not was_on_floor:
-		Debug.sprint("FJLDS")
 		jumping = false
 		animation_tree.set("parameters/conditions/jumping", false)
 		animation_tree.set("parameters/conditions/grounded", true)
