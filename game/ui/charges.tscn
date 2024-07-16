@@ -7,4 +7,4 @@ offset_right = 100.0
 offset_bottom = 10.0
 script = ExtResource("1_al120")
 maximun = 5
-amount = 0
+amount = 4

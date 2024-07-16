@@ -34,10 +34,11 @@ var dashing: bool = false
 
 #HUD
 @onready var hud: Control = %HUD
-@onready var hud_projectile_charges: RichTextLabel = $HUD/Projectile/Charges
-@onready var hud_shield_charges: RichTextLabel = $HUD/Cooldowns/Shield/Charges
-@onready var hud_quicksand_charges: RichTextLabel = $HUD/Cooldowns/Quicksand/Charges
-@onready var hud_cooldowns_charges: RichTextLabel = $HUD/Cooldowns/Dash/Charges
+@onready var hud_projectile_charges = $HUD/Cooldowns/Projectile/Charges
+@onready var hud_shield_charges = $HUD/Cooldowns/Shield/Charges
+@onready var hud_quicksand_charges = $HUD/Cooldowns/Quicksand/Charges
+@onready var hud_cooldowns_charges = $HUD/Cooldowns/Dash/Charges
+
 
 # Timers
 @onready var dash_timer: Timer = %DashTimer
@@ -53,9 +54,19 @@ var shield_charges: int = MAX_SHIELD_CHARGES
 const MAX_PROJECTILES_AMMO: int = 3
 var projectile_ammo: int = MAX_PROJECTILES_AMMO
 
+const MAX_GRENADE_CHARGES: int = 1
+var grenade_charges: int = MAX_GRENADE_CHARGES
+
+const MAX_DASH_CHARGES: int = 1
+var dash_charges: int = MAX_DASH_CHARGES
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	hud_projectile_charges.maximun = MAX_PROJECTILES_AMMO
+	hud_shield_charges.maximun = MAX_SHIELD_CHARGES
+	hud_quicksand_charges.maximun = MAX_GRENADE_CHARGES
+	hud_cooldowns_charges.maximun = MAX_DASH_CHARGES
+	
 	
 
 func _manage_camera(event: InputEvent) -> void:
@@ -191,6 +202,7 @@ func jump() -> void:
 func dash(direction) -> void:
 	if dash_timer.time_left > 0:
 		return
+	dash_charges = 0
 	dashing = true
 	velocity = direction * speed * 5
 	dash_timer.start()
@@ -258,6 +270,7 @@ func die() -> void:
 func throw_grenade(grenade_direction) -> void:
 	if not can_throw_grenade:
 		return
+	grenade_charges = 0
 
 	var up_direction: float = 5.0
 	animation_tree.get("parameters/playback").travel("Throw")
@@ -274,6 +287,7 @@ func throw_grenade(grenade_direction) -> void:
 
 func _on_grenade_timer_timeout() -> void:
 	can_throw_grenade = true
+	grenade_charges = 1
 
 
 @rpc("call_local")
@@ -289,9 +303,14 @@ func stop_dance() -> void:
 		animation_tree.get("parameters/playback").travel("Movement")
 
 func update_hud() -> void:
-	hud_projectile_charges.text = str(projectile_ammo)
-	hud_shield_charges.text = str(shield_charges)
-	hud_quicksand_charges.text = str(charges)
+	hud_projectile_charges.amount = projectile_ammo
+	hud_shield_charges.amount = shield_charges
+	hud_quicksand_charges.amount = grenade_charges
+	hud_cooldowns_charges.amount = dash_charges
 
 func _on_dash_duration_timeout() -> void:
 	dashing = false
+
+
+func _on_dash_timer_timeout():
+	dash_charges = 1
