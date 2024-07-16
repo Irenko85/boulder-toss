@@ -42,6 +42,10 @@ var dashing: bool = false
 @onready var hud_shield_timer = $HUD/Cooldowns/Shield/Timer
 @onready var hud_grenade_timer = $HUD/Cooldowns/Quicksand/Timer
 @onready var hud_dash_timer = $HUD/Cooldowns/Dash/Timer
+@onready var hud_projectile_img = $HUD/Cooldowns/Projectile
+@onready var hud_shield_img = $HUD/Cooldowns/Shield
+@onready var hud_grenade_img = $HUD/Cooldowns/Quicksand
+@onready var hud_dash_img = $HUD/Cooldowns/Dash
 
 
 # Timers
@@ -314,19 +318,31 @@ func update_hud() -> void:
 	
 	hud_projectile_timer.text = ""
 	if projectile_ammo == 0:
-		hud_projectile_timer.text = str(snapped(projectile_timer.time_left, 0.1))
+		hud_projectile_img.modulate.a = 0.5
+		hud_projectile_timer.modulate.a = 2
+		hud_projectile_timer.text = "[center][font_size=20]" + str(snapped(projectile_timer.time_left, 0.1)) + "[/font_size][/center]"
+
 
 	hud_shield_timer.text = ""
+	hud_shield_img.modulate.a = 1
 	if shield_charges == 0:
-		hud_shield_timer.text = str(snapped(shield_timer.time_left, 0.1))
+		hud_shield_img.modulate.a = 0.5
+		hud_shield_timer.modulate.a = 2
+		hud_shield_timer.text = "[center][font_size=20]" + str(snapped(shield_timer.time_left, 0.1)) + "[/font_size][/center]"
 		
 	hud_grenade_timer.text = ""
+	hud_grenade_img.modulate.a = 1
 	if grenade_charges == 0:
-		hud_grenade_timer.text = str(snapped(grenade_timer.time_left, 0.1))
+		hud_grenade_img.modulate.a = 0.5
+		hud_grenade_timer.modulate.a = 2
+		hud_grenade_timer.text = "[center][font_size=20]" + str(snapped(grenade_timer.time_left, 0.1)) + "[/font_size][/center]"
 		
 	hud_dash_timer.text = ""
+	hud_dash_img.modulate.a = 1
 	if dash_charges == 0:
-		hud_dash_timer.text = str(snapped(dash_timer.time_left, 0.1))
+		hud_dash_img.modulate.a = 0.5
+		hud_dash_timer.modulate.a = 2
+		hud_dash_timer.text = "[center][font_size=20]" + str(snapped(dash_timer.time_left, 0.1)) + "[/font_size][/center]"
 
 func _on_dash_duration_timeout() -> void:
 	dashing = false
