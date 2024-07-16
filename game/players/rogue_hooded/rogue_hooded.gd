@@ -38,6 +38,10 @@ var dashing: bool = false
 @onready var hud_shield_charges = $HUD/Cooldowns/Shield/Charges
 @onready var hud_quicksand_charges = $HUD/Cooldowns/Quicksand/Charges
 @onready var hud_cooldowns_charges = $HUD/Cooldowns/Dash/Charges
+@onready var hud_projectile_timer = $HUD/Cooldowns/Projectile/Timer
+@onready var hud_shield_timer = $HUD/Cooldowns/Shield/Timer
+@onready var hud_grenade_timer = $HUD/Cooldowns/Quicksand/Timer
+@onready var hud_dash_timer = $HUD/Cooldowns/Dash/Timer
 
 
 # Timers
@@ -307,6 +311,22 @@ func update_hud() -> void:
 	hud_shield_charges.amount = shield_charges
 	hud_quicksand_charges.amount = grenade_charges
 	hud_cooldowns_charges.amount = dash_charges
+	
+	hud_projectile_timer.text = ""
+	if projectile_ammo == 0:
+		hud_projectile_timer.text = str(snapped(projectile_timer.time_left, 0.1))
+
+	hud_shield_timer.text = ""
+	if shield_charges == 0:
+		hud_shield_timer.text = str(snapped(shield_timer.time_left, 0.1))
+		
+	hud_grenade_timer.text = ""
+	if grenade_charges == 0:
+		hud_grenade_timer.text = str(snapped(grenade_timer.time_left, 0.1))
+		
+	hud_dash_timer.text = ""
+	if dash_charges == 0:
+		hud_dash_timer.text = str(snapped(dash_timer.time_left, 0.1))
 
 func _on_dash_duration_timeout() -> void:
 	dashing = false
