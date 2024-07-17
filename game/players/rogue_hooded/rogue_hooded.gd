@@ -1,12 +1,30 @@
 extends CharacterBody3D
 class_name Player
+#HUD
+@onready var hud: Control = %HUD
+@onready var hud_projectile_charges = $HUD/Cooldowns/Projectile/Charges
+@onready var hud_shield_charges = $HUD/Cooldowns/Shield/Charges
+@onready var hud_quicksand_charges = $HUD/Cooldowns/Quicksand/Charges
+@onready var hud_cooldowns_charges = $HUD/Cooldowns/Dash/Charges
+@onready var hud_projectile_timer = $HUD/Cooldowns/Projectile/Timer
+@onready var hud_shield_timer = $HUD/Cooldowns/Shield/Timer
+@onready var hud_grenade_timer = $HUD/Cooldowns/Quicksand/Timer
+@onready var hud_dash_timer = $HUD/Cooldowns/Dash/Timer
+@onready var hud_projectile_img = $HUD/Cooldowns/Projectile
+@onready var hud_shield_img = $HUD/Cooldowns/Shield
+@onready var hud_grenade_img = $HUD/Cooldowns/Quicksand
+@onready var hud_dash_img = $HUD/Cooldowns/Dash
+@onready var health_bar = $HUD/HealthBar
 
 @export var speed: float = 5.0
 @export var jump_velocity: float = 10.0
 @export var LERP_VALUE: float = 0.15
 @export var acceleration: float = 4.0
 @export var sensitivity: float = 0.3
-@export var player_health: float = 100.0
+@export var player_health: float = 100.0:
+	set(value):
+		player_health = value
+		health_bar.value = value
 @export var grenade_throw_force: float = 15.0
 
 @export_category("Abilities")
@@ -32,20 +50,7 @@ var dashing: bool = false
 @onready var shield_spawner: Node3D = %ShieldSpawner
 @onready var projectile_spawner: Node3D = %ProjectileSpawner
 
-#HUD
-@onready var hud: Control = %HUD
-@onready var hud_projectile_charges = $HUD/Cooldowns/Projectile/Charges
-@onready var hud_shield_charges = $HUD/Cooldowns/Shield/Charges
-@onready var hud_quicksand_charges = $HUD/Cooldowns/Quicksand/Charges
-@onready var hud_cooldowns_charges = $HUD/Cooldowns/Dash/Charges
-@onready var hud_projectile_timer = $HUD/Cooldowns/Projectile/Timer
-@onready var hud_shield_timer = $HUD/Cooldowns/Shield/Timer
-@onready var hud_grenade_timer = $HUD/Cooldowns/Quicksand/Timer
-@onready var hud_dash_timer = $HUD/Cooldowns/Dash/Timer
-@onready var hud_projectile_img = $HUD/Cooldowns/Projectile
-@onready var hud_shield_img = $HUD/Cooldowns/Shield
-@onready var hud_grenade_img = $HUD/Cooldowns/Quicksand
-@onready var hud_dash_img = $HUD/Cooldowns/Dash
+
 
 
 # Timers
@@ -69,6 +74,7 @@ const MAX_DASH_CHARGES: int = 1
 var dash_charges: int = MAX_DASH_CHARGES
 
 func _ready() -> void:
+	player_health = 100
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	hud_projectile_charges.maximun = MAX_PROJECTILES_AMMO
 	hud_shield_charges.maximun = MAX_SHIELD_CHARGES
