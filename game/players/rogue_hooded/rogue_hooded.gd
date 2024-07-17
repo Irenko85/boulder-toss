@@ -317,10 +317,11 @@ func update_hud() -> void:
 	hud_cooldowns_charges.amount = dash_charges
 	
 	hud_projectile_timer.text = ""
+	hud_projectile_img.modulate.a = 1
 	if projectile_ammo == 0:
 		hud_projectile_img.modulate.a = 0.5
 		hud_projectile_timer.modulate.a = 2
-		hud_projectile_timer.text = "[center][font_size=20]" + str(snapped(projectile_timer.time_left, 0.1)) + "[/font_size][/center]"
+		hud_projectile_timer.text = "[center][font_size=25]" + str(snapped(projectile_timer.time_left, 0.1)) + "[/font_size][/center]"
 
 
 	hud_shield_timer.text = ""
@@ -328,21 +329,21 @@ func update_hud() -> void:
 	if shield_charges == 0:
 		hud_shield_img.modulate.a = 0.5
 		hud_shield_timer.modulate.a = 2
-		hud_shield_timer.text = "[center][font_size=20]" + str(snapped(shield_timer.time_left, 0.1)) + "[/font_size][/center]"
+		hud_shield_timer.text = "[center][font_size=25]" + str(snapped(shield_timer.time_left, 0.1)) + "[/font_size][/center]"
 		
 	hud_grenade_timer.text = ""
 	hud_grenade_img.modulate.a = 1
 	if grenade_charges == 0:
 		hud_grenade_img.modulate.a = 0.5
 		hud_grenade_timer.modulate.a = 2
-		hud_grenade_timer.text = "[center][font_size=20]" + str(snapped(grenade_timer.time_left, 0.1)) + "[/font_size][/center]"
+		hud_grenade_timer.text = "[center][font_size=25]" + str(snapped(grenade_timer.time_left, 0.1)) + "[/font_size][/center]"
 		
 	hud_dash_timer.text = ""
 	hud_dash_img.modulate.a = 1
 	if dash_charges == 0:
 		hud_dash_img.modulate.a = 0.5
 		hud_dash_timer.modulate.a = 2
-		hud_dash_timer.text = "[center][font_size=20]" + str(snapped(dash_timer.time_left, 0.1)) + "[/font_size][/center]"
+		hud_dash_timer.text = "[center][font_size=25]" + str(snapped(dash_timer.time_left, 0.1)) + "[/font_size][/center]"
 
 func _on_dash_duration_timeout() -> void:
 	dashing = false
