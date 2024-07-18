@@ -66,10 +66,10 @@ var shield_charges: int = MAX_SHIELD_CHARGES
 const MAX_PROJECTILES_AMMO: int = 3
 var projectile_ammo: int = MAX_PROJECTILES_AMMO
 
-const MAX_GRENADE_CHARGES: int = 1
+const MAX_GRENADE_CHARGES: int = 2
 var grenade_charges: int = MAX_GRENADE_CHARGES
 
-const MAX_DASH_CHARGES: int = 1
+const MAX_DASH_CHARGES: int = 2
 var dash_charges: int = MAX_DASH_CHARGES
 
 func _ready() -> void:
@@ -127,6 +127,9 @@ func _physics_process(delta: float) -> void:
 func apply_gravity(delta):
 	# Add the gravity.
 	if not is_on_floor():
+		if velocity.y < 0:
+			velocity.y -= 5 * gravity * delta
+			return
 		velocity.y -= gravity * delta
 
 
@@ -217,7 +220,7 @@ func dash(direction) -> void:
 		return
 	dash_charges -= 1
 	dashing = true
-	velocity = direction * speed * 5
+	velocity = direction * speed * 10
 	dash_timer.start()
 	dash_duration.start()
 
