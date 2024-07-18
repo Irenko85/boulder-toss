@@ -103,7 +103,7 @@ func _manage_camera(event: InputEvent) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("quit") and not tutorial:
-		get_tree().quit()
+		get_tree().change_scene_to_file("res://game/lobby.tscn")
 	_manage_camera(event)
 
 func _physics_process(delta: float) -> void:
