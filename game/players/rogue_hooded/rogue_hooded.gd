@@ -51,6 +51,7 @@ var can_jump: bool = true
 var is_dancing: bool = false
 var dashing: bool = false
 var is_dead: bool = false
+var tutorial: bool = false
 
 @onready var spring_arm_pivot: Node3D = $Rig/SpringArmPivot
 @onready var spring_arm_3d: SpringArm3D = $Rig/SpringArmPivot/SpringArm3D
@@ -101,7 +102,7 @@ func _manage_camera(event: InputEvent) -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("quit"):
+	if event.is_action_pressed("quit") and not tutorial:
 		get_tree().quit()
 	_manage_camera(event)
 
@@ -345,7 +346,7 @@ func update_hud() -> void:
 	hud_shield_charges.amount = shield_charges
 	hud_quicksand_charges.amount = grenade_charges
 	hud_cooldowns_charges.amount = dash_charges
-	
+
 	hud_projectile_timer.text = ""
 	hud_projectile_img.modulate.a = 1
 	if projectile_ammo == 0:
@@ -360,20 +361,21 @@ func update_hud() -> void:
 		hud_shield_img.modulate.a = 0.5
 		hud_shield_timer.modulate.a = 2
 		hud_shield_timer.text = "[center][font_size=25]" + str(snapped(shield_timer.time_left, 0.1)) + "[/font_size][/center]"
-		
+
 	hud_grenade_timer.text = ""
 	hud_grenade_img.modulate.a = 1
 	if grenade_charges == 0:
 		hud_grenade_img.modulate.a = 0.5
 		hud_grenade_timer.modulate.a = 2
 		hud_grenade_timer.text = "[center][font_size=25]" + str(snapped(grenade_timer.time_left, 0.1)) + "[/font_size][/center]"
-		
+
 	hud_dash_timer.text = ""
 	hud_dash_img.modulate.a = 1
 	if dash_charges == 0:
 		hud_dash_img.modulate.a = 0.5
 		hud_dash_timer.modulate.a = 2
 		hud_dash_timer.text = "[center][font_size=25]" + str(snapped(dash_timer.time_left, 0.1)) + "[/font_size][/center]"
+
 
 func _on_dash_duration_timeout() -> void:
 	dashing = false
@@ -383,3 +385,12 @@ func _on_dash_timer_timeout():
 	dash_charges += 1
 	if dash_charges < MAX_DASH_CHARGES:
 		dash_timer.start()
+
+
+func lock_player() -> void:
+	can_jump = false
+	can_move = false
+	shield_charges = 0
+	projectile_ammo = 0
+	grenade_charges = 0
+	dash_charges = 0

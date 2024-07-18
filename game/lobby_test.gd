@@ -6,7 +6,7 @@ var player_index = 1
 @onready var timer = $Timer
 
 func _ready():
-	
+
 	for test_player in Game.test_players:
 		var player = Statics.PlayerData.new(
 			0,
