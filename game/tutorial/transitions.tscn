@@ -1,6 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://f2d4f46moybn"]
+[gd_scene load_steps=6 format=3 uid="uid://8wd3wu8ir0pg"]
 
-[ext_resource type="Script" path="res://game/tutorial/transitions.gd" id="1_n2ujw"]
+[sub_resource type="GDScript" id="GDScript_bx7gk"]
+script/source = "extends CanvasLayer
+
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+
+func show_fade() -> void:
+	animation_player.play(\"show\")
+
+
+func hide_fade() -> void:
+	animation_player.play(\"hide\")
+"
 
 [sub_resource type="Animation" id="Animation_hxbg1"]
 length = 0.001
@@ -55,7 +66,7 @@ _data = {
 }
 
 [node name="Transitions" type="CanvasLayer"]
-script = ExtResource("1_n2ujw")
+script = SubResource("GDScript_bx7gk")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 15

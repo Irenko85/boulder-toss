@@ -10,7 +10,6 @@ var player_id: int
 func _ready() -> void:
 	ready_texture.hide()
 
-
 func setup(player: Statics.PlayerData) -> void:
 	player_id = player.id
 	name = str(player_id)

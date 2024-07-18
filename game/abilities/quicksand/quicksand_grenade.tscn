@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dv6v65mkv7cyu" path="res://game/abilities/quicksand/quicksand.tscn" id="2_psrp8"]
 [ext_resource type="PackedScene" uid="uid://dcv70nbbhiet6" path="res://game/abilities/quicksand/scene.gltf" id="3_6sn1t"]
 [ext_resource type="AudioStream" uid="uid://dr3n1ae385l58" path="res://game/abilities/sfx/quicksand_grenade_explosion.wav" id="4_eixo1"]
+[ext_resource type="AudioStream" uid="uid://8i5xtvg48kll" path="res://game/abilities/sfx/quicksand_grenade_explosion.wav" id="4_eixo1"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_p8b7l"]
 bounce = 0.4
