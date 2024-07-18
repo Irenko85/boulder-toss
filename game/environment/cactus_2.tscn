@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://go8hknt6v6gr"]
+
+[ext_resource type="PackedScene" uid="uid://d1ahlhnem03ls" path="res://game/environment/cactus2.glb" id="1_fmdav"]
+
+[node name="cactus2" instance=ExtResource("1_fmdav")]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)

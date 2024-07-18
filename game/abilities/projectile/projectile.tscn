@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=3 uid="uid://em1sf73nscno"]
+
+[ext_resource type="Script" path="res://game/abilities/projectile/projectile.gd" id="1_8ejkr"]
+[ext_resource type="PackedScene" uid="uid://cfkq0ec5hduvp" path="res://game/abilities/projectile/projectile.glb" id="1_omrpw"]
+[ext_resource type="Texture2D" uid="uid://bpcenqcv7juct" path="res://game/abilities/projectile/projectile_color_atlas.png" id="2_74thi"]
+[ext_resource type="PackedScene" uid="uid://bsuustsm04e25" path="res://game/abilities/projectile/projectile_particles.tscn" id="2_rels8"]
+[ext_resource type="AudioStream" uid="uid://dk6axe2xa48f2" path="res://game/abilities/sfx/rock_break.wav" id="5_vl5v3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sbqha"]
+resource_name = "color_atlas"
+cull_mode = 2
+albedo_color = Color(0.792157, 0.584314, 0.403922, 1)
+albedo_texture = ExtResource("2_74thi")
+roughness = 0.5
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ltxtv"]
+radius = 0.375646
+
+[node name="Projectile" type="Node3D"]
+script = ExtResource("1_8ejkr")
+projectile_particles = ExtResource("2_rels8")
+
+[node name="projectile" parent="." instance=ExtResource("1_omrpw")]
+
+[node name="rock2_cave_light" parent="projectile" index="0"]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+surface_material_override/0 = SubResource("StandardMaterial3D_sbqha")
+
+[node name="QueueFreeTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 4
+collision_mask = 7
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15694, 0)
+shape = SubResource("SphereShape3D_ltxtv")
+
+[node name="Break" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5_vl5v3")
+volume_db = -20.0
+
+[connection signal="timeout" from="QueueFreeTimer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+
+[editable path="projectile"]

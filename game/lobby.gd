@@ -6,6 +6,7 @@ extends MarginContainer
 @onready var user = %User
 @onready var host = %Host
 @onready var join = %Join
+@onready var credits = %Credits
 
 
 @onready var ip = %IP
@@ -37,7 +38,7 @@ var status = { 1 : false }
 var _menu_stack: Array[Control] = []
 
 func _ready():
-	
+	Input.mouse_mode = 0
 	if Game.multiplayer_test:
 		get_tree().change_scene_to_file("res://game/lobby_test.tscn")
 		return
@@ -267,3 +268,11 @@ func _back_to_first_menu() -> void:
 		first.show()
 	if Game.is_online():
 		_disconnect()
+
+
+func _on_tutorial_button_up():
+	get_tree().change_scene_to_file("res://game/tutorial/tutorial.tscn")
+
+
+func _on_credits_button_up():
+	get_tree().change_scene_to_file("res://game/credits/credits.tscn")
