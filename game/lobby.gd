@@ -6,6 +6,7 @@ extends MarginContainer
 @onready var user = %User
 @onready var host = %Host
 @onready var join = %Join
+@onready var credits = %Credits
 
 
 @onready var ip = %IP
@@ -271,3 +272,7 @@ func _back_to_first_menu() -> void:
 
 func _on_tutorial_button_up():
 	get_tree().change_scene_to_file("res://game/tutorial/tutorial.tscn")
+
+
+func _on_credits_button_up():
+	get_tree().change_scene_to_file("res://game/credits/credits.tscn")
