@@ -1,12 +1,30 @@
 extends CharacterBody3D
 class_name Player
+#HUD
+@onready var hud: Control = %HUD
+@onready var hud_projectile_charges = $HUD/Cooldowns/Projectile/Charges
+@onready var hud_shield_charges = $HUD/Cooldowns/Shield/Charges
+@onready var hud_quicksand_charges = $HUD/Cooldowns/Quicksand/Charges
+@onready var hud_cooldowns_charges = $HUD/Cooldowns/Dash/Charges
+@onready var hud_projectile_timer = $HUD/Cooldowns/Projectile/Timer
+@onready var hud_shield_timer = $HUD/Cooldowns/Shield/Timer
+@onready var hud_grenade_timer = $HUD/Cooldowns/Quicksand/Timer
+@onready var hud_dash_timer = $HUD/Cooldowns/Dash/Timer
+@onready var hud_projectile_img = $HUD/Cooldowns/Projectile
+@onready var hud_shield_img = $HUD/Cooldowns/Shield
+@onready var hud_grenade_img = $HUD/Cooldowns/Quicksand
+@onready var hud_dash_img = $HUD/Cooldowns/Dash
+@onready var health_bar = $HUD/HealthBar
 
 @export var speed: float = 5.0
 @export var jump_velocity: float = 10.0
 @export var LERP_VALUE: float = 0.15
 @export var acceleration: float = 4.0
 @export var sensitivity: float = 0.3
-@export var player_health: float = 100.0
+@export var player_health: float = 100.0:
+	set(value):
+		player_health = value
+		health_bar.value = value
 @export var grenade_throw_force: float = 15.0
 
 @export_category("Abilities")
@@ -20,7 +38,6 @@ var jumping: bool = false
 var can_move: bool = true
 var was_on_floor: bool = true
 var can_jump: bool = true
-var can_throw_grenade: bool = true
 var is_dancing: bool = false
 var dashing: bool = false
 
@@ -31,6 +48,9 @@ var dashing: bool = false
 @onready var camera_3d: Camera3D = $Rig/SpringArmPivot/SpringArm3D/Camera3D
 @onready var shield_spawner: Node3D = %ShieldSpawner
 @onready var projectile_spawner: Node3D = %ProjectileSpawner
+
+
+
 
 # Timers
 @onready var dash_timer: Timer = %DashTimer
@@ -46,10 +66,21 @@ var shield_charges: int = MAX_SHIELD_CHARGES
 const MAX_PROJECTILES_AMMO: int = 3
 var projectile_ammo: int = MAX_PROJECTILES_AMMO
 
+const MAX_GRENADE_CHARGES: int = 1
+var grenade_charges: int = MAX_GRENADE_CHARGES
+
+const MAX_DASH_CHARGES: int = 1
+var dash_charges: int = MAX_DASH_CHARGES
 
 func _ready() -> void:
+	player_health = 100
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-
+	hud_projectile_charges.maximun = MAX_PROJECTILES_AMMO
+	hud_shield_charges.maximun = MAX_SHIELD_CHARGES
+	hud_quicksand_charges.maximun = MAX_GRENADE_CHARGES
+	hud_cooldowns_charges.maximun = MAX_DASH_CHARGES
+	
+	
 
 func _manage_camera(event: InputEvent) -> void:
 	if is_multiplayer_authority() and event is InputEventMouseMotion:
@@ -63,10 +94,10 @@ func _input(event: InputEvent) -> void:
 		get_tree().quit()
 	_manage_camera(event)
 
-
 func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
 	handle_animations()
+	update_hud()
 
 	if can_move:
 		movement(delta)
@@ -182,8 +213,9 @@ func jump() -> void:
 
 
 func dash(direction) -> void:
-	if dash_timer.time_left > 0:
+	if dash_charges <= 0:
 		return
+	dash_charges -= 1
 	dashing = true
 	velocity = direction * speed * 5
 	dash_timer.start()
@@ -219,6 +251,8 @@ func setup(player_data: Statics.PlayerData) -> void:
 	name = str(player_data.id)
 	set_multiplayer_authority(player_data.id)
 	camera_3d.current = is_multiplayer_authority()
+	if is_multiplayer_authority():
+		hud.visible = true
 
 
 @rpc("unreliable_ordered")
@@ -226,6 +260,7 @@ func send_data(pos: Vector3, vel: Vector3, quaternion):
 	global_position = lerp(global_position, pos, 0.75)
 	velocity = lerp(velocity, vel, 0.75)
 	rig.quaternion = rig.quaternion.slerp(quaternion, 0.75)
+	
 
 
 func take_damage(amount: float) -> void:
@@ -246,8 +281,9 @@ func die() -> void:
 
 @rpc("call_local")
 func throw_grenade(grenade_direction) -> void:
-	if not can_throw_grenade:
+	if grenade_charges <= 0:
 		return
+	grenade_charges -= 1
 
 	var up_direction: float = 5.0
 	animation_tree.get("parameters/playback").travel("Throw")
@@ -259,11 +295,12 @@ func throw_grenade(grenade_direction) -> void:
 		grenade_direction * grenade_throw_force
 	)
 	grenade_timer.start()
-	can_throw_grenade = false
 
 
 func _on_grenade_timer_timeout() -> void:
-	can_throw_grenade = true
+	grenade_charges += 1
+	if grenade_charges < MAX_GRENADE_CHARGES:
+		grenade_timer.start()
 
 
 @rpc("call_local")
@@ -278,6 +315,46 @@ func stop_dance() -> void:
 		is_dancing = false
 		animation_tree.get("parameters/playback").travel("Movement")
 
+func update_hud() -> void:
+	hud_projectile_charges.amount = projectile_ammo
+	hud_shield_charges.amount = shield_charges
+	hud_quicksand_charges.amount = grenade_charges
+	hud_cooldowns_charges.amount = dash_charges
+	
+	hud_projectile_timer.text = ""
+	hud_projectile_img.modulate.a = 1
+	if projectile_ammo == 0:
+		hud_projectile_img.modulate.a = 0.5
+		hud_projectile_timer.modulate.a = 2
+		hud_projectile_timer.text = "[center][font_size=25]" + str(snapped(projectile_timer.time_left, 0.1)) + "[/font_size][/center]"
+
+
+	hud_shield_timer.text = ""
+	hud_shield_img.modulate.a = 1
+	if shield_charges == 0:
+		hud_shield_img.modulate.a = 0.5
+		hud_shield_timer.modulate.a = 2
+		hud_shield_timer.text = "[center][font_size=25]" + str(snapped(shield_timer.time_left, 0.1)) + "[/font_size][/center]"
+		
+	hud_grenade_timer.text = ""
+	hud_grenade_img.modulate.a = 1
+	if grenade_charges == 0:
+		hud_grenade_img.modulate.a = 0.5
+		hud_grenade_timer.modulate.a = 2
+		hud_grenade_timer.text = "[center][font_size=25]" + str(snapped(grenade_timer.time_left, 0.1)) + "[/font_size][/center]"
+		
+	hud_dash_timer.text = ""
+	hud_dash_img.modulate.a = 1
+	if dash_charges == 0:
+		hud_dash_img.modulate.a = 0.5
+		hud_dash_timer.modulate.a = 2
+		hud_dash_timer.text = "[center][font_size=25]" + str(snapped(dash_timer.time_left, 0.1)) + "[/font_size][/center]"
 
 func _on_dash_duration_timeout() -> void:
 	dashing = false
+
+
+func _on_dash_timer_timeout():
+	dash_charges += 1
+	if dash_charges < MAX_DASH_CHARGES:
+		dash_timer.start()
