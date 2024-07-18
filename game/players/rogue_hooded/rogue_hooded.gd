@@ -38,7 +38,6 @@ var jumping: bool = false
 var can_move: bool = true
 var was_on_floor: bool = true
 var can_jump: bool = true
-var can_throw_grenade: bool = true
 var is_dancing: bool = false
 var dashing: bool = false
 
@@ -214,9 +213,9 @@ func jump() -> void:
 
 
 func dash(direction) -> void:
-	if dash_timer.time_left > 0:
+	if dash_charges <= 0:
 		return
-	dash_charges = 0
+	dash_charges -= 1
 	dashing = true
 	velocity = direction * speed * 5
 	dash_timer.start()
@@ -282,9 +281,9 @@ func die() -> void:
 
 @rpc("call_local")
 func throw_grenade(grenade_direction) -> void:
-	if not can_throw_grenade:
+	if grenade_charges <= 0:
 		return
-	grenade_charges = 0
+	grenade_charges -= 1
 
 	var up_direction: float = 5.0
 	animation_tree.get("parameters/playback").travel("Throw")
@@ -296,12 +295,12 @@ func throw_grenade(grenade_direction) -> void:
 		grenade_direction * grenade_throw_force
 	)
 	grenade_timer.start()
-	can_throw_grenade = false
 
 
 func _on_grenade_timer_timeout() -> void:
-	can_throw_grenade = true
-	grenade_charges = 1
+	grenade_charges += 1
+	if grenade_charges < MAX_GRENADE_CHARGES:
+		grenade_timer.start()
 
 
 @rpc("call_local")
@@ -356,4 +355,6 @@ func _on_dash_duration_timeout() -> void:
 
 
 func _on_dash_timer_timeout():
-	dash_charges = 1
+	dash_charges += 1
+	if dash_charges < MAX_DASH_CHARGES:
+		dash_timer.start()
