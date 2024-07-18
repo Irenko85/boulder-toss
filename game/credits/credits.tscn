@@ -1,0 +1,48 @@
+[gd_scene load_steps=3 format=3 uid="uid://bxqhtq0ovvpvv"]
+
+[ext_resource type="Script" path="res://game/credits/credits.gd" id="1_tgga4"]
+[ext_resource type="FontFile" uid="uid://8gtf58a01l7u" path="res://game/credits/Lambda-Regular.otf" id="2_6wwxt"]
+
+[node name="Credits" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tgga4")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+top_level = true
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="CreditsText" type="RichTextLabel" parent="MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("2_6wwxt")
+theme_override_fonts/bold_font = ExtResource("2_6wwxt")
+theme_override_font_sizes/normal_font_size = 22
+theme_override_font_sizes/bold_font_size = 24
+bbcode_enabled = true
+text = "[center] Placeholder Text [/center]"
+fit_content = true
+scroll_active = false
