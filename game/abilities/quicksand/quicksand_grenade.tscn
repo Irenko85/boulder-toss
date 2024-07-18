@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://b0huwqlhivvnq"]
+[gd_scene load_steps=7 format=3 uid="uid://b0huwqlhivvnq"]
 
 [ext_resource type="Script" path="res://game/abilities/quicksand/quicksand_grenade.gd" id="1_xd1u4"]
 [ext_resource type="PackedScene" uid="uid://dv6v65mkv7cyu" path="res://game/abilities/quicksand/quicksand.tscn" id="2_psrp8"]
 [ext_resource type="PackedScene" uid="uid://dcv70nbbhiet6" path="res://game/abilities/quicksand/scene.gltf" id="3_6sn1t"]
+[ext_resource type="AudioStream" uid="uid://j823g8kgnp7t" path="res://game/abilities/sfx/quicksand_grenade_explosion.wav" id="4_eixo1"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_p8b7l"]
 bounce = 0.4
@@ -36,6 +37,9 @@ light_color = Color(1, 0.82424, 0.585178, 1)
 light_energy = 5.0
 light_size = 0.025
 omni_range = 0.467175
+
+[node name="Explosion" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_eixo1")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="ExplosionTimer" to="." method="_on_explosion_timer_timeout"]

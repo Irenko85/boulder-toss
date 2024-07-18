@@ -16,6 +16,16 @@ class_name Player
 @onready var hud_dash_img = $HUD/Cooldowns/Dash
 @onready var health_bar = $HUD/HealthBar
 
+#SFX
+@onready var jump_sfx: AudioStreamPlayer3D = $Jump
+@onready var throw_projectile_sfx: AudioStreamPlayer3D = $Throw_projectile
+@onready var throw_grenade_sfx: AudioStreamPlayer3D = $Throw_grenade
+@onready var dash_sfx: AudioStreamPlayer3D = $Dash
+@onready var shield_sfx: AudioStreamPlayer3D = $Shield
+@onready var hurt_sfx: AudioStreamPlayer3D = $Hurt
+@onready var death_sfx: AudioStreamPlayer3D = $Death
+
+
 @export var speed: float = 5.0
 @export var jump_velocity: float = 10.0
 @export var LERP_VALUE: float = 0.15
@@ -40,6 +50,7 @@ var was_on_floor: bool = true
 var can_jump: bool = true
 var is_dancing: bool = false
 var dashing: bool = false
+var is_dead: bool = false
 
 @onready var spring_arm_pivot: Node3D = $Rig/SpringArmPivot
 @onready var spring_arm_3d: SpringArm3D = $Rig/SpringArmPivot/SpringArm3D
@@ -136,6 +147,7 @@ func apply_gravity(delta):
 @rpc("call_local")
 func spawn_shield() -> void:
 	animation_tree.get("parameters/playback").travel("Block")
+	shield_sfx.play()
 
 	var shield_instance = player_shield.instantiate()
 	add_sibling(shield_instance)
@@ -170,6 +182,7 @@ func shoot() -> void:
 		return
 
 	spawn_projectile.rpc(-camera_3d.get_global_transform().basis.z)
+	throw_projectile_sfx.play()
 	if projectile_ammo == MAX_PROJECTILES_AMMO:
 		projectile_timer.start()
 
@@ -213,6 +226,7 @@ func movement(delta) -> void:
 func jump() -> void:
 	velocity.y = jump_velocity
 	jumping = true
+	jump_sfx.play()
 
 
 func dash(direction) -> void:
@@ -220,6 +234,7 @@ func dash(direction) -> void:
 		return
 	dash_charges -= 1
 	dashing = true
+	dash_sfx.play()
 	velocity = direction * speed * 10
 	dash_timer.start()
 	dash_duration.start()
@@ -268,6 +283,9 @@ func send_data(pos: Vector3, vel: Vector3, quaternion):
 
 func take_damage(amount: float) -> void:
 	player_health -= amount
+	var pitch = randf_range(0.7, 1.1)
+	hurt_sfx.pitch_scale = pitch 
+	hurt_sfx.play()
 	if player_health <= 0:
 		player_health = 0
 		if is_multiplayer_authority():
@@ -276,7 +294,11 @@ func take_damage(amount: float) -> void:
 
 @rpc("call_local")
 func die() -> void:
+	if is_dead:
+		return
+	is_dead = true
 	animation_tree.get("parameters/playback").travel("Death")
+	death_sfx.play()
 	#can_move = false
 	set_physics_process(false)
 	set_process_input(false)
@@ -287,7 +309,7 @@ func throw_grenade(grenade_direction) -> void:
 	if grenade_charges <= 0:
 		return
 	grenade_charges -= 1
-
+	throw_grenade_sfx.play()
 	var up_direction: float = 5.0
 	animation_tree.get("parameters/playback").travel("Throw")
 	var grenade_instance = quicksand_grenade.instantiate() as RigidBody3D
