@@ -9,8 +9,6 @@ var valid = true
 @export var projectile_particles: PackedScene
 
 @onready var break_sfx: AudioStreamPlayer3D = $Break
-@onready var hola: AudioStreamPlayer3D = $hola
-
 
 func _process(delta) -> void:
 	global_position += delta * direction * SPEED
