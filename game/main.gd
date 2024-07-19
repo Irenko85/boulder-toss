@@ -15,7 +15,7 @@ const CACTUS_INSTANCES: int = 75
 func  _ready() -> void:
 	# Same seed for both players
 	seed("Irenko".hash())
-
+	
 	for player_data in Game.players:
 		var player = player_scene.instantiate()
 		players.add_child(player)
@@ -23,7 +23,9 @@ func  _ready() -> void:
 
 		if len(players.get_children()) == 1:
 			player.global_position = player_a.global_position
+
 		if len(players.get_children()) == 2:
+			player.rig.global_rotation.y += PI
 			player.global_position = player_b.global_position
 	
 	# Spawn cactus in random positions

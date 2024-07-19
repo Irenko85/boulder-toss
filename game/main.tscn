@@ -190,10 +190,10 @@ shape = SubResource("ConcavePolygonShape3D_2exbv")
 [node name="Spawn" type="Node3D" parent="."]
 
 [node name="PlayerA" type="Marker3D" parent="Spawn"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 10.8476)
 
 [node name="PlayerB" type="Marker3D" parent="Spawn"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -8.00913)
 
 [node name="World" type="Node3D" parent="."]
 

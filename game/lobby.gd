@@ -76,6 +76,11 @@ func _process(_delta: float) -> void:
 		time.text = str(ceil(start_timer.time_left))
 
 
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("quit"):
+		get_tree().quit()
+
+
 func _on_upnp_completed(status) -> void:
 	print(status)
 	if status == OK:

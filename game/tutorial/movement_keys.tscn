@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://fkg5dvy0pi8m"]
+[gd_scene load_steps=11 format=3 uid="uid://fkg5dvy0pi8m"]
 
 [ext_resource type="Texture2D" uid="uid://dgpxrp4qvvnhq" path="res://game/tutorial/keyboard_w.png" id="1_f83y6"]
 [ext_resource type="Texture2D" uid="uid://dovejmb3nko5c" path="res://game/tutorial/keyboard_shift.png" id="1_jmafx"]
+[ext_resource type="FontFile" uid="uid://8gtf58a01l7u" path="res://game/credits/lambda_regular.otf" id="1_v4byp"]
 [ext_resource type="Texture2D" uid="uid://cjm0xd8oak8sd" path="res://game/tutorial/keyboard_a.png" id="2_rio6d"]
 [ext_resource type="Texture2D" uid="uid://psxu1p8mil6d" path="res://game/tutorial/keyboard_s.png" id="3_kupa7"]
 [ext_resource type="Texture2D" uid="uid://bmerjonpglpxr" path="res://game/tutorial/keyboard_d.png" id="4_2w8r5"]
@@ -45,6 +46,7 @@ theme_override_constants/separation = -10
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer5"]
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_v4byp")
 theme_override_font_sizes/font_size = 24
 text = "Dash"
 horizontal_alignment = 1
@@ -72,6 +74,7 @@ size_flags_vertical = 4
 [node name="Jump" type="Label" parent="VBoxContainer/HBoxContainer/MarginContainer/VBoxContainer4"]
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_v4byp")
 theme_override_font_sizes/font_size = 24
 text = "Movement"
 horizontal_alignment = 1
@@ -113,6 +116,7 @@ theme_override_constants/separation = -45
 [node name="Jump" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer4"]
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_v4byp")
 theme_override_font_sizes/font_size = 24
 text = "Jump"
 horizontal_alignment = 1
@@ -134,6 +138,7 @@ theme_override_constants/separation = -10
 [node name="Toss" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_v4byp")
 theme_override_font_sizes/font_size = 24
 text = "Toss"
 horizontal_alignment = 1
@@ -156,6 +161,7 @@ theme_override_constants/separation = -10
 [node name="Shield" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_v4byp")
 theme_override_font_sizes/font_size = 24
 text = "Shield"
 horizontal_alignment = 1
@@ -178,6 +184,7 @@ theme_override_constants/separation = -10
 [node name="Quicksand" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer3"]
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_v4byp")
 theme_override_font_sizes/font_size = 24
 text = "Quicksand"
 horizontal_alignment = 1
