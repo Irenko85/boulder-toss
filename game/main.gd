@@ -15,7 +15,7 @@ const CACTUS_INSTANCES: int = 75
 func  _ready() -> void:
 	# Same seed for both players
 	seed("Irenko".hash())
-	
+	Game.players.sort_custom(func(a, b): return a.id < b.id)
 	for player_data in Game.players:
 		var player = player_scene.instantiate()
 		players.add_child(player)
